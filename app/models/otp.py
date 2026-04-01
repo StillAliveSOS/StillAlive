@@ -1,0 +1,16 @@
+import os 
+from sqlalchemy import Column, String, Boolean, DateTime
+from app.core.database import Base
+from datetime import datetime, timedelta, timezone
+from app.core.config import OTP_EXPIRY_MIN
+
+class OTPRequest(Base):
+    __tablename__ = "otp_requests"
+    phone = Column(String, primary_key=True)
+    otp = Column(String, nullable=False)
+    verified = Column(Boolean, default=False)
+    expires_at = Column(DateTime(timezone=True), nullable=False)
+
+    @staticmethod
+    def expiry_time():
+        return datetime.now(timezone.utc) + timedelta(minutes=OTP_EXPIRY_MIN)
