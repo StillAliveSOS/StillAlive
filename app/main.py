@@ -42,7 +42,7 @@ def startup():
 # -----------------------------
 # First Page
 # -----------------------------
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(directory="templates")
 @app.get("/")
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
