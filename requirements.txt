@@ -16,3 +16,4 @@ passlib[bcrypt]
 pytz
 jinja2
 pydantic[email]
+starlette==0.52.1
