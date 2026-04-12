@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, DateTime
-from datetime import datetime
+from datetime import datetime,timezone
 import uuid
 
 from app.core.database import Base
@@ -11,4 +11,4 @@ class Waitlist(Base):
     full_name = Column(String, nullable=False)
     phone_number = Column(String, nullable=False, unique=True)
     email = Column(String, nullable=False, unique=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))

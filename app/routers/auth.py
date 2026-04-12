@@ -10,7 +10,7 @@ from app.models.user import User
 from app.models.otp import OTPRequest
 from app.schemas.auth import OTPVerifyIn, OTPRequestIn, TokenOut
 from app.services.phone_verification import verify_phone_number
-from datetime import datetime
+from datetime import datetime, timezone
 import secrets
 from app.core.security import (
     create_access_token,
@@ -66,7 +66,7 @@ def verify_otp(data: OTPVerifyIn, db: Session = Depends(get_db)):
         .first()
     )
 
-    if not record or record.expires_at < datetime.utcnow():
+    if not record or record.expires_at < datetime.now(timezone.utc):
         raise HTTPException(status_code=400, detail="Invalid or expired OTP")
 
     record.verified = True
